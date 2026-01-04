@@ -3,20 +3,16 @@ import networkx as nx
 from collections import deque
 
 
-def bfs(graph, start, level=0):
+def bfs(graph, start):
     visited = set([start])
-
-    queue = deque([start])
-
+    queue = deque([(start, 0)])
     while queue:
-        node = queue.popleft()
-        print(f"{level} :" + " " * level + node)
-        level += 1
-
+        node, level = queue.popleft()
+        print(f"{level:<2}"+"-" * level + node + "  ")
         for neighbor in graph.neighbors(node):
             if neighbor not in visited:
                 visited.add(neighbor)
-                queue.append(neighbor)
+                queue.append((neighbor, level + 1))
 
 
 def dfs(graph, start):
@@ -24,7 +20,7 @@ def dfs(graph, start):
 
     def visit(node, level=0):
         visited.add(node)
-        print(f"{level} :" + " " * level + node)
+        print(f"{level:<2}"+"-" * level + node + "  ")
 
         for neighbor in graph.neighbors(node):
             if neighbor not in visited:
@@ -100,7 +96,7 @@ def main():
     print("DFS:")
     dfs(G, "Академмістечко")
 
-    print("\n-----------------\n") 
+    print("\n-----------------\n")
 
     print("BFS:")
     bfs(G, "Академмістечко")
